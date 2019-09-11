@@ -67,8 +67,10 @@ while True:
                                                    'message': 'Пьянки с таким номером не найдено',
                                                    'random_id': 0})
                                 flag_w = 0
+                            break
                         break
-                
+                    break
+
 
             if event.from_user and response == 'создать пьянку':
                 flag = 1
