@@ -60,14 +60,12 @@ while True:
                                                        'random_id': 0})
                                     f_new = 1
                                     flag_w = 0
-                                    break
                             if f_new == 0:
                                 vk_session.method('messages.send',
                                                   {'user_id': event.user_id,
                                                    'message': 'Пьянки с таким номером не найдено',
                                                    'random_id': 0})
                                 flag_w = 0
-                            break
                         break
                     break
 
