@@ -43,26 +43,32 @@ while True:
                                        'random_id': 0})
 
             if event.from_user and response == 'удалить пьянку':
-                vk_session.method('messages.send',
-                                  {'user_id': event.user_id, 'message': 'Введите уникальный номер пьянки',
-                                   'random_id': 0})
-                for event in longpoll.listen():
-                    if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
-                        num = event.text
-                        f_new = 0
-                        for x in partys:
-                            if x.own_number == num:
-                                partys.remove(x)
+                flag_w = 1
+                while flag_w == 1:
+                    vk_session.method('messages.send',
+                                      {'user_id': event.user_id, 'message': 'Введите уникальный номер пьянки',
+                                       'random_id': 0})
+                    for event in longpoll.listen():
+                        if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
+                            num = event.text
+                            f_new = 0
+                            for x in partys:
+                                if x.own_number == num:
+                                    partys.remove(x)
+                                    vk_session.method('messages.send',
+                                                      {'user_id': event.user_id, 'message': 'Пьянка успешно удалена',
+                                                       'random_id': 0})
+                                    f_new = 1
+                                    flag_w = 0
+                                    break
+                            if f_new == 0:
                                 vk_session.method('messages.send',
-                                                  {'user_id': event.user_id, 'message': 'Пьянка успешно удалена',
+                                                  {'user_id': event.user_id,
+                                                   'message': 'Пьянки с таким номером не найдено',
                                                    'random_id': 0})
-                                f_new = 1
-                                break
-                        if f_new == 0:
-                            vk_session.method('messages.send',
-                                              {'user_id': event.user_id, 'message': 'Пьянки с таким номером не найдено',
-                                               'random_id': 0})
-                    break
+                                flag_w = 0
+                        break
+                
 
             if event.from_user and response == 'создать пьянку':
                 flag = 1
@@ -122,4 +128,5 @@ while True:
                                             flag = 1
                                             break
                                 break
+
 
