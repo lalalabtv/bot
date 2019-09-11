@@ -17,6 +17,12 @@ while True:
             print("Текст сообщения: " + str(event.text))
             print(event.user_id)
             response = event.text.lower()
-            if event.from_user:
-                if response == 'привет':
-                    vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Привет, добро пожаловать!', 'random_id': 0})
+            if event.from_user and response == 'привет':
+                vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Привет, добро пожаловать!', 'random_id': 0})
+            if event.from_user and response == 'создать пьянку':
+                vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Введите дату', 'random_id': 0})
+                for event in longpoll.listen():
+                    if event.type == VkEventType.MESSAGE_NEW:
+                        data = event.text
+                        vk_session.method('messages.send',
+                                          {'user_id': event.user_id, 'message': data, 'random_id': 0})
