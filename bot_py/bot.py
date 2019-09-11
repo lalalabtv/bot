@@ -1,6 +1,4 @@
-# coding= utf-8
 # -*- coding: utf-8 -*-
-# vim: set fileencoding= utf-8 :
 from vk_api.longpoll import VkLongPoll, VkEventType
 import vk_api
 
