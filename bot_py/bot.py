@@ -1,9 +1,6 @@
+# -*- coding: utf-8 -*-
 from vk_api.longpoll import VkLongPoll, VkEventType
 import vk_api
-
-#login, password = "79682852676", "noname6879"
-#vk_session = vk_api.VkApi(login, password)
-#vk_session.auth()
 
 token = "07622f74afe7be873d144286e593fbc11feb094fc78a59d0b3d4b71ae9fe4fb27c22395afdfb5c7001e5c"
 vk_session = vk_api.VkApi(token=token)
