@@ -23,8 +23,11 @@ while True:
                 vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Введите дату', 'random_id': 0})
                 flag = 1
                 while flag == 1:
-                    if event.type == VkEventType.MESSAGE_NEW:
-                        data = event.text
-                        vk_session.method('messages.send',
-                                          {'user_id': event.user_id, 'message': data, 'random_id': 0})
-                        flag = 0
+                    for event in longpoll.listen():
+                        if event.type == VkEventType.MESSAGE_NEW:
+                            data = event.text
+                            vk_session.method('messages.send',
+                                              {'user_id': event.user_id, 'message': data, 'random_id': 0})
+                            flag = 0
+                            break
+                    
