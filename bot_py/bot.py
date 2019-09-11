@@ -60,7 +60,7 @@ while True:
                             number = event.text
                             vk_session.method('messages.send',
                                               {'user_id': event.user_id, 'message': 'Проверяем...', 'random_id': 0})
-                            for x in list(partys.keys()):
+                            for x in list(partys):
                                 if x.own_number == number:
                                     partys.remove(x)
                             vk_session.method('messages.send',
