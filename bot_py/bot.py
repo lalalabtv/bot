@@ -81,4 +81,4 @@ while True:
                                 kolvo = kolvo+1
                                 break
 
-                partys.append(p)
+                    partys.append(p)
