@@ -52,6 +52,11 @@ while True:
                             number = event.text
                             vk_session.method('messages.send',
                                               {'user_id': event.user_id, 'message': 'Проверяем...', 'random_id': 0})
+                            for x in partys:
+                                if x.own_number == number:
+                                    partys.remove(x)
+                            vk_session.method('messages.send',
+                                              {'user_id': event.user_id, 'message': 'Пьянка удалена', 'random_id': 0})
                             flag = 2
                             break
                     if flag == 2:
