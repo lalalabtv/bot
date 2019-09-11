@@ -80,7 +80,7 @@ while True:
                                     if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
                                         response = event.text.lower()
                                         if(response == 'да'):
-                                            partys.append(p)
+                                            partys.add(p)
                                             vk_session.method('messages.send',
                                                               {'user_id': event.user_id,
                                                                'message': 'Пьянка создана!',
