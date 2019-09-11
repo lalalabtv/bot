@@ -78,6 +78,6 @@ while True:
                                                    'message': 'Пьянка создана!',
                                                    'random_id': 0})
                                 flag = 0
-                                partys.append(p)
+                                partys.add(p)
                                 kolvo = kolvo+1
                                 break
