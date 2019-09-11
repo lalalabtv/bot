@@ -33,13 +33,19 @@ while True:
             print(event.user_id)
             response = event.text.lower()
             if event.from_user and response == 'привет':
-                vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Привет, добро пожаловать!', 'random_id': 0})
-            if event.from_user and response == 'показать пьянки':
-                vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Доступные пьянки: ', 'random_id': 0})
+                vk_session.method('messages.send', {'user_id': event.user_id,
+                                                    'message': 'Привет, добро пожаловать!' + '\n' + 'Вот список моих команд:' + '\n' + ' 👤 Создать пьянку' + '\n' + ' 👥 Найти пьянку' + '\n' + ' ⛔ Удалить пьянку',
+                                                    'random_id': 0})
+            if event.from_user and response == 'команды':
+                vk_session.method('messages.send', {'user_id': event.user_id,
+                                                    'message': 'Вот список моих команд:' + '\n' + ' 👤 Создать пьянку' + '\n' + ' 👥 Найти пьянку' + '\n' + ' ⛔ Удалить пьянку',
+                                                    'random_id': 0})
+            if event.from_user and response == 'найти пьянку':
+                vk_session.method('messages.send', {'user_id': event.user_id, 'message': '🔊 Доступные пьянки: ', 'random_id': 0})
                 for x in partys:
                     vk_session.method('messages.send',
                                       {'user_id': event.user_id,
-                                       'message': 'Дата: '+ x.data +'\n' + 'Место: ' + x.place + '\n' + 'Количество человек:' + x.persons,
+                                       'message': '📆 Дата: '+ x.data +'\n' + '🏠 Место: ' + x.place + '\n' + '👥 Количество человек:' + x.persons,
                                        'random_id': 0})
 
             if event.from_user and response == 'удалить пьянку':
@@ -52,22 +58,13 @@ while True:
                             number = event.text
                             vk_session.method('messages.send',
                                               {'user_id': event.user_id, 'message': 'Проверяем...', 'random_id': 0})
-                            for x in list(partys):
+                            for x in list(partys.keys()):
                                 if x.own_number == number:
                                     partys.remove(x)
                             vk_session.method('messages.send',
-                                              {'user_id': event.user_id, 'message': 'Пьянка удалена', 'random_id': 0})
-                            flag = 2
+                                              {'user_id': event.user_id, 'message': '🌀 Пьянка удалена', 'random_id': 0})
+                            flag = 0
                             break
-                    if flag == 2:
-                        for event in longpoll.listen():
-                            if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
-                                p.place = event.text
-                                vk_session.method('messages.send',
-                                                  {'user_id': event.user_id, 'message': 'Хуй',
-                                                   'random_id': 0})
-                                flag = 0
-                                break
                     break
 
             if event.from_user and response == 'создать пьянку':
@@ -99,7 +96,7 @@ while True:
 
                                 vk_session.method('messages.send',
                                                   {'user_id': event.user_id,
-                                                   'message': 'Дата: ' + p.data + '\n' + 'Место: ' + p.place + '\n' + 'Количество человек:' + p.persons,
+                                                   'message': '📆 Дата: '+ p.data +'\n' + '🏠 Место: ' + p.place + '\n' + '👥 Количество человек:' + p.persons,
                                                    'random_id': 0})
                                 flag = 0
                                 vk_session.method('messages.send',
