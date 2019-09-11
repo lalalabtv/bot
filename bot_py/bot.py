@@ -43,9 +43,10 @@ while True:
                                        'random_id': 0})
 
             if event.from_user and response == 'удалить пьянку':
+                vk_session.method('messages.send',
+                                  {'user_id': event.user_id, 'message': 'Введите уникальный номер пьянки',
+                                   'random_id': 0})
                 for event in longpoll.listen():
-                    vk_session.method('messages.send',
-                                      {'user_id': event.user_id, 'message': 'Введите уникальный номер пьянки', 'random_id': 0})
                     if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
                         num = event.text
                         f_new = 0
@@ -121,3 +122,4 @@ while True:
                                             flag = 1
                                             break
                                 break
+
