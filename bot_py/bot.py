@@ -50,7 +50,7 @@ while True:
                                        'random_id': 0})
                     for event in longpoll.listen():
                         if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
-                            num = event.text
+                            num = str(event.text)
                             f_new = 0
                             for x in partys:
                                 if x.own_number == num:
