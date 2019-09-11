@@ -8,6 +8,14 @@ sys.setdefaultencoding('utf-8')
 token = "07622f74afe7be873d144286e593fbc11feb094fc78a59d0b3d4b71ae9fe4fb27c22395afdfb5c7001e5c"
 vk_session = vk_api.VkApi(token=token)
 
+class Pyanka(object):
+    def __init__(self, data, place, persons):
+        self.data = data
+        self.place = place
+        self.persons = persons
+
+partys = []
+
 session_api = vk_session.get_api()
 longpoll = VkLongPoll(vk_session)
 
@@ -19,13 +27,16 @@ while True:
             response = event.text.lower()
             if event.from_user and response == 'привет':
                 vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Привет, добро пожаловать!', 'random_id': 0})
+            if event.from_user and response == 'показать пьянки':
+                vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Привет, добро пожаловать!', 'random_id': 0})
             if event.from_user and response == 'создать пьянку':
+                p = Pyanka
                 vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Введите дату', 'random_id': 0})
                 flag = 1
                 while flag == 1:
                     for event in longpoll.listen():
                         if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
-                            data = event.text
+                            p.data = event.text
                             vk_session.method('messages.send',
                                               {'user_id': event.user_id, 'message': 'Дата и время: ' + data, 'random_id': 0})
                             vk_session.method('messages.send',
@@ -35,9 +46,23 @@ while True:
                     if flag == 2:
                         for event in longpoll.listen():
                             if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
-                                place = event.text
+                                p.place = event.text
                                 vk_session.method('messages.send',
                                                   {'user_id': event.user_id, 'message': 'Место: ' + place,
                                                    'random_id': 0})
+                                vk_session.method('messages.send',
+                                                  {'user_id': event.user_id, 'message': 'Количество человек',
+                                                   'random_id': 0})
+                                flag = 3
+                                break
+                    if flag == 3:
+                        for event in longpoll.listen():
+                            if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
+                                p.persons = event.text
+                                vk_session.method('messages.send',
+                                                  {'user_id': event.user_id, 'message': 'Количество человек: ' + place,
+                                                   'random_id': 0})
                                 flag = 0
                                 break
+
+                partys.append(p)
