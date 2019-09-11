@@ -15,7 +15,7 @@ class Pyanka(object):
         self.place = place
         self.persons = persons
 
-partys = []
+partys = [' ']
 
 kolvo = 0
 
