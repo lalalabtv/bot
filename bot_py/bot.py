@@ -43,34 +43,27 @@ while True:
                                        'random_id': 0})
 
             if event.from_user and response == 'удалить пьянку':
-                flag_w = 1
-                while flag_w == 1:
+                flag = 1
+                while flag == 1:
                     vk_session.method('messages.send',
-                                      {'user_id': event.user_id, 'message': 'Введите уникальный номер пьянки',
-                                       'random_id': 0})
-                    for devent in longpoll.listen():
-                        if devent.type == VkEventType.MESSAGE_NEW and not devent.from_me:
+                                      {'user_id': event.user_id, 'message': 'Введите уникальный номер пьянки', 'random_id': 0})
+                    for event in longpoll.listen():
+                        if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
+                            number = event.text
                             vk_session.method('messages.send',
-                                              {'user_id': event.user_id, 'message': 'Хуй',
-                                               'random_id': 0})
-                            num = devent.text
-                            f_new = 0
-                            for i in partys:
-                                if i.own_number == num:
-                                    partys.remove(i)
-                                    vk_session.method('messages.send',
-                                                      {'user_id': devent.user_id, 'message': 'Пьянка успешно удалена',
-                                                       'random_id': 0})
-                                    f_new = 1
-                                    flag_w = 0
-                            if f_new == 0:
+                                              {'user_id': event.user_id, 'message': 'Проверяем...', 'random_id': 0})
+                            flag = 2
+                            break
+                    if flag == 2:
+                        for event in longpoll.listen():
+                            if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
+                                p.place = event.text
                                 vk_session.method('messages.send',
-                                                  {'user_id': devent.user_id,
-                                                   'message': 'Пьянки с таким номером не найдено',
+                                                  {'user_id': event.user_id, 'message': 'Хуй',
                                                    'random_id': 0})
-                                flag_w = 0
-                        break
-                    break
+                                flag = 0
+                                break
+                            break
 
             if event.from_user and response == 'создать пьянку':
                 flag = 1
