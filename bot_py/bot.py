@@ -17,7 +17,7 @@ class Pyanka(object):
 
 p0 = Pyanka('null', 'test', 'null')
 
-partys = {}
+partys = {p0}
 
 kolvo = 0
 
