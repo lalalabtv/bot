@@ -17,7 +17,7 @@ class Pyanka(object):
         self.persons = persons
         self.own_number = own_number
 
-p0 = Pyanka('null', 'test', 'null', 0)
+p0 = Pyanka('null', 'test', 'null', '0')
 
 partys = {}
 
@@ -66,7 +66,7 @@ while True:
             if event.from_user and response == 'создать пьянку':
                 flag = 1
                 while flag == 1:
-                    p = Pyanka('null', 'null', 'null', 0)
+                    p = Pyanka('null', 'null', 'null', '0')
                     vk_session.method('messages.send',
                                       {'user_id': event.user_id, 'message': 'Введите дату', 'random_id': 0})
                     for event in longpoll.listen():
@@ -104,7 +104,7 @@ while True:
                                         response = event.text.lower()
                                         if(response == 'да'):
                                             r = random.randrange(100000000, 999999999, 25)
-                                            p.own_number = r
+                                            p.own_number = str(r)
                                             partys.add(p)
                                             vk_session.method('messages.send',
                                                               {'user_id': event.user_id,
