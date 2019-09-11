@@ -63,7 +63,7 @@ while True:
                                                    'random_id': 0})
                                 flag = 0
                                 break
-                            break
+                    break
 
             if event.from_user and response == 'создать пьянку':
                 flag = 1
