@@ -17,7 +17,7 @@ class Pyanka(object):
 
 partys = array('i', [])
 
-kolvo = -1
+kolvo = 0
 
 session_api = vk_session.get_api()
 longpoll = VkLongPoll(vk_session)
