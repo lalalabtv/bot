@@ -2,6 +2,7 @@
 from vk_api.longpoll import VkLongPoll, VkEventType
 import vk_api
 import sys  
+from array import *
 reload(sys)  
 sys.setdefaultencoding('utf-8')
 
