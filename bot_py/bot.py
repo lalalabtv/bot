@@ -41,7 +41,3 @@ while True:
                                                    'random_id': 0})
                                 flag = 0
                                 break
-        if event.type == VkEventType.GROUP_JOIN:
-            vk_session.method('messages.send', {'user_id': event.user_id,
-                                                'message': 'Добро пожаловать в паблик, напиши мне *Привет*, чтобы начать работу',
-                                                'random_id': 0})
