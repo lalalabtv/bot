@@ -15,7 +15,7 @@ class Pyanka(object):
         self.place = place
         self.persons = persons
 
-partys = array('i', [])
+partys = []
 
 kolvo = 0
 
@@ -39,7 +39,7 @@ while True:
                                        'random_id': 0})
 
             if event.from_user and response == 'создать пьянку':
-                p = Pyanka
+                p: Type[Pyanka] = Pyanka
                 vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Введите дату', 'random_id': 0})
                 flag = 1
                 while flag == 1:
@@ -79,4 +79,4 @@ while True:
                                 kolvo = kolvo+1
                                 break
 
-                partys.insert(kolvo, p)
+                partys.append(p)
