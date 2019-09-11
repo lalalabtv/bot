@@ -28,7 +28,13 @@ while True:
             if event.from_user and response == 'привет':
                 vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Привет, добро пожаловать!', 'random_id': 0})
             if event.from_user and response == 'показать пьянки':
-                vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Привет, добро пожаловать!', 'random_id': 0})
+                vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Доступные пьянки: ', 'random_id': 0})
+                for x in partys:
+                    vk_session.method('messages.send',
+                                      {'user_id': event.user_id,
+                                       'message': 'Дата: '+ x.data +'\n' + 'Место: ' + x.place + '\n' + 'Количество человек:' + x.persons,
+                                       'random_id': 0})
+
             if event.from_user and response == 'создать пьянку':
                 p = Pyanka
                 vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Введите дату', 'random_id': 0})
@@ -61,6 +67,10 @@ while True:
                                 p.persons = event.text
                                 vk_session.method('messages.send',
                                                   {'user_id': event.user_id, 'message': 'Количество человек: ' + p.persons,
+                                                   'random_id': 0})
+                                vk_session.method('messages.send',
+                                                  {'user_id': event.user_id,
+                                                   'message': 'Пьянка создана!',
                                                    'random_id': 0})
                                 flag = 0
                                 break
