@@ -52,9 +52,9 @@ while True:
                         if devent.type == VkEventType.MESSAGE_NEW and not devent.from_me:
                             num = devent.text
                             f_new = 0
-                            for x in partys:
-                                if x.own_number == num:
-                                    partys.remove(x)
+                            for i in partys:
+                                if i.own_number == num:
+                                    partys.remove(i)
                                     vk_session.method('messages.send',
                                                       {'user_id': devent.user_id, 'message': 'Пьянка успешно удалена',
                                                        'random_id': 0})
@@ -127,4 +127,3 @@ while True:
                                             flag = 1
                                             break
                                 break
-
