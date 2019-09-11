@@ -24,7 +24,7 @@ while True:
                 flag = 1
                 while flag == 1:
                     for event in longpoll.listen():
-                        if event.type == VkEventType.MESSAGE_NEW:
+                        if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
                             data = event.text
                             vk_session.method('messages.send',
                                               {'user_id': event.user_id, 'message': data, 'random_id': 0})
