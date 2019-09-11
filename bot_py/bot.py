@@ -104,7 +104,6 @@ while True:
                                         response = event.text.lower()
                                         if(response == 'да'):
                                             r = random.randrange(100000000, 999999999, 25)
-                                            r = random.shuffle(r)
                                             p.own_number = r
                                             partys.add(p)
                                             vk_session.method('messages.send',
