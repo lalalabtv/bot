@@ -43,11 +43,11 @@ while True:
             if event.from_user and response == 'найти пьянку':
                 vk_session.method('messages.send', {'user_id': event.user_id, 'message': '🔊 Доступные пьянки: ', 'random_id': 0})
                 for x in partys:
-                    vk_session.method('messages.send',
-                                      {'user_id': event.user_id,
-                                       'message': '📆 Дата: '+ x.data +'\n' + '🏠 Место: ' + x.place + '\n' + '👥 Количество человек:' + x.persons,
-                                       'random_id': 0})
-
+                    if x.data != 'null':
+                        vk_session.method('messages.send',
+                                          {'user_id': event.user_id,
+                                           'message': '📆 Дата: ' + x.data + '\n' + '🏠 Место: ' + x.place + '\n' + '👥 Количество человек:' + x.persons,
+                                           'random_id': 0})
             if event.from_user and response == 'удалить пьянку':
                 flag = 1
                 while flag == 1:
