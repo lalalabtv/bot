@@ -2,6 +2,7 @@
 from vk_api.longpoll import VkLongPoll, VkEventType
 import vk_api
 import sys  
+import random
 from array import *
 reload(sys)  
 sys.setdefaultencoding('utf-8')
@@ -10,14 +11,15 @@ token = "07622f74afe7be873d144286e593fbc11feb094fc78a59d0b3d4b71ae9fe4fb27c22395
 vk_session = vk_api.VkApi(token=token)
 
 class Pyanka(object):
-    def __init__(self, data, place, persons):
+    def __init__(self, data, place, persons, own_number):
         self.data = data
         self.place = place
         self.persons = persons
+        self.own_number = own_number
 
-p0 = Pyanka('null', 'test', 'null')
+p0 = Pyanka('null', 'test', 'null', 0)
 
-partys = {p0}
+partys = {}
 
 kolvo = 0
 
@@ -40,10 +42,31 @@ while True:
                                        'message': 'Дата: '+ x.data +'\n' + 'Место: ' + x.place + '\n' + 'Количество человек:' + x.persons,
                                        'random_id': 0})
 
+            if event.from_user and response == 'удалить пьянку':
+                for event in longpoll.listen():
+                    vk_session.method('messages.send',
+                                      {'user_id': event.user_id, 'message': 'Введите уникальный номер пьянки', 'random_id': 0})
+                    if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
+                        num = event.text
+                        f_new = 0
+                        for x in partys:
+                            if x.own_number == num:
+                                partys.remove(x)
+                                vk_session.method('messages.send',
+                                                  {'user_id': event.user_id, 'message': 'Пьянка успешно удалена',
+                                                   'random_id': 0})
+                                f_new = 1
+                                break
+                        if f_new == 0:
+                            vk_session.method('messages.send',
+                                              {'user_id': event.user_id, 'message': 'Пьянки с таким номером не найдено',
+                                               'random_id': 0})
+                    break
+
             if event.from_user and response == 'создать пьянку':
                 flag = 1
                 while flag == 1:
-                    p = Pyanka('null', 'null', 'null')
+                    p = Pyanka('null', 'null', 'null', 0)
                     vk_session.method('messages.send',
                                       {'user_id': event.user_id, 'message': 'Введите дату', 'random_id': 0})
                     for event in longpoll.listen():
@@ -80,10 +103,17 @@ while True:
                                     if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
                                         response = event.text.lower()
                                         if(response == 'да'):
+                                            r = random.randrange(100000000, 999999999, 25)
+                                            r = random.shuffle(r)
+                                            p.own_number = r
                                             partys.add(p)
                                             vk_session.method('messages.send',
                                                               {'user_id': event.user_id,
-                                                               'message': 'Пьянка создана!',
+                                                               'message': 'Пьянка создана!' + '\n' + 'Её уникальный номер: ' + p.own_number,
+                                                               'random_id': 0})
+                                            vk_session.method('messages.send',
+                                                              {'user_id': event.user_id,
+                                                               'message': 'Используйте его, чтобы удалить пьянку',
                                                                'random_id': 0})
                                             flag = 0
                                             kolvo = kolvo + 1
@@ -92,4 +122,3 @@ while True:
                                             flag = 1
                                             break
                                 break
-
