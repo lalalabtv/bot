@@ -41,15 +41,14 @@ while True:
                                        'random_id': 0})
 
             if event.from_user and response == 'создать пьянку':
-                p = Pyanka('null','null','null')
-                vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Введите дату', 'random_id': 0})
                 flag = 1
                 while flag == 1:
+                    p = Pyanka('null', 'null', 'null')
+                    vk_session.method('messages.send',
+                                      {'user_id': event.user_id, 'message': 'Введите дату', 'random_id': 0})
                     for event in longpoll.listen():
                         if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
                             p.data = event.text
-                            vk_session.method('messages.send',
-                                              {'user_id': event.user_id, 'message': 'Дата и время: ' + p.data, 'random_id': 0})
                             vk_session.method('messages.send',
                                               {'user_id': event.user_id, 'message': 'Введите место', 'random_id': 0})
                             flag = 2
@@ -58,9 +57,6 @@ while True:
                         for event in longpoll.listen():
                             if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
                                 p.place = event.text
-                                vk_session.method('messages.send',
-                                                  {'user_id': event.user_id, 'message': 'Место: ' + p.place,
-                                                   'random_id': 0})
                                 vk_session.method('messages.send',
                                                   {'user_id': event.user_id, 'message': 'Количество человек',
                                                    'random_id': 0})
@@ -71,13 +67,27 @@ while True:
                             if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
                                 p.persons = event.text
                                 vk_session.method('messages.send',
-                                                  {'user_id': event.user_id, 'message': 'Количество человек: ' + p.persons,
-                                                   'random_id': 0})
-                                vk_session.method('messages.send',
                                                   {'user_id': event.user_id,
                                                    'message': 'Пьянка создана!',
                                                    'random_id': 0})
+                                vk_session.method('messages.send',
+                                                  {'user_id': event.user_id,
+                                                   'message': 'Дата: ' + x.data + '\n' + 'Место: ' + x.place + '\n' + 'Количество человек:' + x.persons,
+                                                   'random_id': 0})
                                 flag = 0
-                                partys.add(p)
-                                kolvo = kolvo+1
+                                vk_session.method('messages.send',
+                                                  {'user_id': event.user_id,
+                                                   'message': 'Всё верно? (Да/Нет)',
+                                                   'random_id': 0})
+                                for event in longpoll.listen():
+                                    if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
+                                        response = event.text.lower()
+                                        if(response == 'Да'):
+                                            partys.append(p)
+                                            flag = 0
+                                            kolvo = kolvo + 1
+                                            break
+                                        if (response == 'Нет'):
+                                            flag = 1
+                                            break
                                 break
