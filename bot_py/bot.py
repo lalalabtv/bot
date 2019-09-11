@@ -14,7 +14,9 @@ class Pyanka(object):
         self.place = place
         self.persons = persons
 
-partys = []
+partys = array('i')
+
+kolvo = -1
 
 session_api = vk_session.get_api()
 longpoll = VkLongPoll(vk_session)
@@ -73,6 +75,7 @@ while True:
                                                    'message': 'Пьянка создана!',
                                                    'random_id': 0})
                                 flag = 0
+                                kolvo = kolvo+1
                                 break
 
-                partys.append(p)
+                partys.insert(kolvo, p)
