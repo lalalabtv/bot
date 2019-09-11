@@ -27,7 +27,15 @@ while True:
                         if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
                             data = event.text
                             vk_session.method('messages.send',
-                                              {'user_id': event.user_id, 'message': data, 'random_id': 0})
+                                              {'user_id': event.user_id, 'message': 'Дата и время: ' + data, 'random_id': 0})
+                            flag = 0
+                            break
+                    for event in longpoll.listen():
+                        if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
+                            vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Введите дату', 'random_id': 0})
+                            place = event.text
+                            vk_session.method('messages.send',
+                                              {'user_id': event.user_id, 'message': 'Место: ' + place, 'random_id': 0})
                             flag = 0
                             break
                     
