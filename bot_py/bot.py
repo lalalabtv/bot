@@ -48,27 +48,26 @@ while True:
                     vk_session.method('messages.send',
                                       {'user_id': event.user_id, 'message': 'Введите уникальный номер пьянки',
                                        'random_id': 0})
-                    for event in longpoll.listen():
-                        if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
-                            num = event.text
+                    for devent in longpoll.listen():
+                        if devent.type == VkEventType.MESSAGE_NEW and not devent.from_me:
+                            num = devent.text
                             f_new = 0
                             for x in partys:
                                 if x.own_number == num:
                                     partys.pop(x)
                                     vk_session.method('messages.send',
-                                                      {'user_id': event.user_id, 'message': 'Пьянка успешно удалена',
+                                                      {'user_id': devent.user_id, 'message': 'Пьянка успешно удалена',
                                                        'random_id': 0})
                                     f_new = 1
                                     flag_w = 0
                             if f_new == 0:
                                 vk_session.method('messages.send',
-                                                  {'user_id': event.user_id,
+                                                  {'user_id': devent.user_id,
                                                    'message': 'Пьянки с таким номером не найдено',
                                                    'random_id': 0})
                                 flag_w = 0
                         break
                     break
-
 
             if event.from_user and response == 'создать пьянку':
                 flag = 1
@@ -128,3 +127,4 @@ while True:
                                             flag = 1
                                             break
                                 break
+
