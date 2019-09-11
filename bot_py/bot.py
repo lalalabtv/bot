@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from vk_api.longpoll import VkLongPoll, VkEventType
 import vk_api
+import sys  
+reload(sys)  
+sys.setdefaultencoding('utf-8')
 
 token = "07622f74afe7be873d144286e593fbc11feb094fc78a59d0b3d4b71ae9fe4fb27c22395afdfb5c7001e5c"
 vk_session = vk_api.VkApi(token=token)
