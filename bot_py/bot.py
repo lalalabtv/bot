@@ -38,7 +38,7 @@ while True:
                         if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
                             p.data = event.text
                             vk_session.method('messages.send',
-                                              {'user_id': event.user_id, 'message': 'Дата и время: ' + data, 'random_id': 0})
+                                              {'user_id': event.user_id, 'message': 'Дата и время: ' + p.data, 'random_id': 0})
                             vk_session.method('messages.send',
                                               {'user_id': event.user_id, 'message': 'Введите место', 'random_id': 0})
                             flag = 2
@@ -48,7 +48,7 @@ while True:
                             if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
                                 p.place = event.text
                                 vk_session.method('messages.send',
-                                                  {'user_id': event.user_id, 'message': 'Место: ' + place,
+                                                  {'user_id': event.user_id, 'message': 'Место: ' + p.place,
                                                    'random_id': 0})
                                 vk_session.method('messages.send',
                                                   {'user_id': event.user_id, 'message': 'Количество человек',
@@ -60,7 +60,7 @@ while True:
                             if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
                                 p.persons = event.text
                                 vk_session.method('messages.send',
-                                                  {'user_id': event.user_id, 'message': 'Количество человек: ' + place,
+                                                  {'user_id': event.user_id, 'message': 'Количество человек: ' + p.persons,
                                                    'random_id': 0})
                                 flag = 0
                                 break
