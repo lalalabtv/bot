@@ -50,6 +50,9 @@ while True:
                                        'random_id': 0})
                     for devent in longpoll.listen():
                         if devent.type == VkEventType.MESSAGE_NEW and not devent.from_me:
+                            vk_session.method('messages.send',
+                                              {'user_id': event.user_id, 'message': 'Хуй',
+                                               'random_id': 0})
                             num = devent.text
                             f_new = 0
                             for i in partys:
