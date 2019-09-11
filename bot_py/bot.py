@@ -66,7 +66,7 @@ while True:
                         for event in longpoll.listen():
                             if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
                                 p.persons = event.text
-                                
+
                                 vk_session.method('messages.send',
                                                   {'user_id': event.user_id,
                                                    'message': 'Дата: ' + p.data + '\n' + 'Место: ' + p.place + '\n' + 'Количество человек:' + p.persons,
@@ -79,7 +79,7 @@ while True:
                                 for event in longpoll.listen():
                                     if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
                                         response = event.text.lower()
-                                        if(response == 'Да'):
+                                        if(response == 'да'):
                                             partys.append(p)
                                             vk_session.method('messages.send',
                                                               {'user_id': event.user_id,
@@ -88,7 +88,8 @@ while True:
                                             flag = 0
                                             kolvo = kolvo + 1
                                             break
-                                        if (response == 'Нет'):
+                                        if (response == 'нет'):
                                             flag = 1
                                             break
                                 break
+
