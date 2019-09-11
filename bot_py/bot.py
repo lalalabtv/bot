@@ -54,7 +54,7 @@ while True:
                             f_new = 0
                             for x in partys:
                                 if x.own_number == num:
-                                    partys.pop(x)
+                                    partys.remove(x)
                                     vk_session.method('messages.send',
                                                       {'user_id': devent.user_id, 'message': 'Пьянка успешно удалена',
                                                        'random_id': 0})
