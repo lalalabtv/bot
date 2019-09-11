@@ -28,8 +28,6 @@ kolvo = 0
 session_api = vk_session.get_api()
 longpoll = VkLongPoll(vk_session)
 
-devent = event
-
 while True:
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW:
