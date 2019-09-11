@@ -12,7 +12,7 @@ session_api = vk_session.get_api()
 longpoll = VkLongPoll(vk_session)
 
 while True:
-    for event in longpoll.listen():
+        for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW:
             print("Текст сообщения: " + str(event.text))
             print(event.user_id)
@@ -41,4 +41,9 @@ while True:
                                                    'random_id': 0})
                                 flag = 0
                                 break
+        if event.type == VkEventType.GROUP_JOIN:
+            if event.join_type == 'approved':
+                vk_session.method('messages.send', {'user_id': event.user_id,
+                                                    'message': 'Добро пожаловать в паблик, напиши мне *Привет*, чтобы начать работу',
+                                                    'random_id': 0})
                     
