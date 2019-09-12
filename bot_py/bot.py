@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from vk_api.longpoll import VkLongPoll, VkEventType
+from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 import vk_api
 import sys  
 import random
@@ -27,6 +28,16 @@ kolvo = 0
 
 session_api = vk_session.get_api()
 longpoll = VkLongPoll(vk_session)
+def create_keyboard(response):
+    keyboard = VkKeyboard(one_time=False)
+    if response == 'привет':
+
+        keyboard.add_button('Создать пьянку', color =VkKeyboardColor.PRIMARY)
+        keyboard.add_button('Найти пьянку', color=VkKeyboardColor.POSITIVE)
+        keyboard.add_button('Удалить пьянку', color=VkKeyboardColor.NEGATIVE)
+    keyboard = keyboard.get_keyboard()
+    
+    return keyboard
 
 while True:
     for event in longpoll.listen():
@@ -34,10 +45,12 @@ while True:
             print("Текст сообщения: " + str(event.text))
             print(event.user_id)
             response = event.text.lower()
+            keyboard = create_keyboard(response)
             if event.from_user and response == 'привет':
                 vk_session.method('messages.send', {'user_id': event.user_id,
                                                     'message': 'Привет, добро пожаловать!' + '\n' + '\n' + 'Вот список моих команд:' + '\n' + ' 👤 Создать пьянку' + '\n' + ' 👥 Найти пьянку' + '\n' + ' ⛔ Удалить пьянку',
-                                                    'random_id': 0})
+                                                    'random_id': 0,
+                                                    'keyboard': keyboard})
             if event.from_user and response == 'команды':
                 vk_session.method('messages.send', {'user_id': event.user_id,
                                                     'message': 'Вот список моих команд:' + '\n' + ' 👤 Создать пьянку' + '\n' + ' 👥 Найти пьянку' + '\n' + ' ⛔ Удалить пьянку',
