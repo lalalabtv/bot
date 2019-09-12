@@ -48,12 +48,12 @@ while True:
             keyboard = create_keyboard(response)
             if event.from_user and response == 'привет':
                 vk_session.method('messages.send', {'user_id': event.user_id,
-                                                    'message': 'Привет, добро пожаловать!' + '\n' + '\n' + 'Вот список моих команд:' + '\n' + ' 👤 Создать пьянку' + '\n' + ' 👥 Найти пьянку' + '\n' + ' ⛔ Удалить пьянку',
+                                                    'message': 'Привет, добро пожаловать!' + '\n' + '\n' + 'Вот список моих команд:' + '\n' + ' 👤 Создать пьянку' + '\n' + ' 👥 Найти пьянку' + '\n' + ' ❌ Удалить пьянку',
                                                     'random_id': 0,
                                                     'keyboard': keyboard})
             if event.from_user and response == 'команды':
                 vk_session.method('messages.send', {'user_id': event.user_id,
-                                                    'message': 'Вот список моих команд:' + '\n' + ' 👤 Создать пьянку' + '\n' + ' 👥 Найти пьянку' + '\n' + ' ⛔ Удалить пьянку',
+                                                    'message': 'Вот список моих команд:' + '\n' + ' 👤 Создать пьянку' + '\n' + ' 👥 Найти пьянку' + '\n' + ' ❌ Удалить пьянку',
                                                     'random_id': 0})
             if event.from_user and response == 'найти пьянку':
                 vk_session.method('messages.send', {'user_id': event.user_id, 'message': '🔊 Доступные пьянки: ', 'random_id': 0})
@@ -72,12 +72,12 @@ while True:
                         if event.type == VkEventType.MESSAGE_NEW and not event.from_me:
                             number = event.text
                             vk_session.method('messages.send',
-                                              {'user_id': event.user_id, 'message': 'Проверяем...', 'random_id': 0})
-                            for x in list(partys):
+                                              {'user_id': event.user_id, 'message': '🔄 Проверяем...', 'random_id': 0})
+                            for x in list(partys.keys()):
                                 if x.own_number == number:
                                     partys.remove(x)
                             vk_session.method('messages.send',
-                                              {'user_id': event.user_id, 'message': '🌀 Пьянка удалена', 'random_id': 0})
+                                              {'user_id': event.user_id, 'message': '✅ Пьянка удалена', 'random_id': 0})
                             flag = 0
                             break
                     break
@@ -145,7 +145,7 @@ while True:
                                             partys.add(p)
                                             vk_session.method('messages.send',
                                                               {'user_id': id,
-                                                               'message': 'Пьянка создана!' + '\n' + 'Её уникальный номер: ' + p.own_number,
+                                                               'message': '✅ Пьянка создана!' + '\n' + '#️⃣Её уникальный номер: ' + p.own_number,
                                                                'random_id': 0})
                                             vk_session.method('messages.send',
                                                               {'user_id': id,
