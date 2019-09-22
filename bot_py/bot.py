@@ -61,7 +61,7 @@ while True:
                     if x.data != 'null':
                         vk_session.method('messages.send',
                                           {'user_id': event.user_id,
-                                           'message': '📆 Дата: ' + x.data + '\n' + '🏠 Место: ' + x.place + '\n' + '👥 Количество человек:' + x.persons + '\n' + '👥 Беседа:' + x.link,
+                                           'message': '📆 Дата: ' + x.data + '\n' + '🏠 Место: ' + x.place + '\n' + '👥 Количество человек:' + x.persons + '\n' + '👥 Беседа:' + x.link + '\n' + ' Описание: ' + x.description,
                                            'random_id': 0})
             if event.from_user and response == 'удалить пьянку':
                 flag = 1
