@@ -8,7 +8,7 @@ from array import *
 reload(sys)  
 sys.setdefaultencoding('utf-8')
 
-token = "07622f74afe7be873d144286e593fbc11feb094fc78a59d0b3d4b71ae9fe4fb27c22395afdfb5c7001e5c"
+token = "API_KEY"
 vk_session = vk_api.VkApi(token=token)
 
 class Pyanka(object):
